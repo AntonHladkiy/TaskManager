@@ -1,0 +1,17 @@
+
+<h3 ><%= @task.title %></h3>
+<dl class="row">
+  <dt class="col-sm-3">Description:</dt>
+  <dd class="col-sm-9"><%= @task.description %></dd>
+  <dt class="col-sm-3">Priority:</dt>
+  <dd class="col-sm-9"><%= @task.priority %></dd>
+  <dt class="col-sm-3">Due date:</dt>
+  <dd class="col-sm-9"><%= @task.dueDate %></dd>
+  <dt class="col-sm-3">Completed:</dt>
+  <%if @task.done? %>
+    <dd class="col-sm-9"><input type="checkbox" checked disabled></dd>
+    <%else%>
+  <dd class="col-sm-9"><input type="checkbox" disabled></dd>
+  <%end %>
+</dl>
+  <%= link_to "Edit task", edit_task_path(@task),:class => 'btn btn-warning' %>

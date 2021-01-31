@@ -1,0 +1,18 @@
+
+  <h2>Edit task</h2>
+  <%= form_for :task, url: task_path(@task), method: :patch do |f| %>
+    <% if @task.errors.any? %>
+      <% @task.errors.full_messages.each do |msg| %>
+          <div class="alert alert-danger"><%= msg %></div>
+        <%end %>
+    <% end %>
+    <%= f.label :Title %><br />
+    <%= f.text_field(:title, :class => 'form-control w-50') %>
+    <%= f.label :Description %><br />
+    <%= f.text_area(:description, :class => 'form-control w-50') %>
+    <%= f.label :Priority %><br />
+    <%= f.number_field(:priority, :class => 'form-control w-50') %>
+    <%= f.label :Due_Date %><br />
+    <%= f.date_field(:dueDate, :class => 'form-control w-50') %>
+    <%= f.submit("Save", :class => 'btn btn-warning mt-2') %>
+  <% end %>

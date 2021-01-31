@@ -1,0 +1,71 @@
+<script>
+    $(document).ready(function(){
+        $('#check_all').on("click", function() {
+            let checkboxes = $('input[type="checkbox"]');
+            checkboxes.prop("checked",true);
+        });
+    });
+    $(document).ready(function(){
+        $('#uncheck_all').on("click", function() {
+            let checkboxes = $('input[type="checkbox"]');
+            checkboxes.prop("checked",false);
+        });
+    });
+    $(document).ready(function() {
+        $(".hover").hover(
+            function () {
+                $('[id=' + "task_" + this.id + ']').removeClass("d-none")
+            },
+            function () {
+                let id = this.id;
+                setTimeout(function () {
+                    $('[id=' + "task_" + id + ']').addClass("d-none")
+                }, 1500);
+            }
+        );
+    });
+
+</script>
+<%= form_for :tasks, url: "/tasks/batch_delete", method: :delete  do |f| %>
+<h3 class="mt-2"><%= link_to "All tasks to do:" ,tasks_path(:not_completed_sorted=>true), :class=>"text-dark"%></h3>
+  <p class="font-weight-light s">press to sort tasks</p>
+  <div class="not_completed_tasks">
+  <%if not @tasks_not_completed.nil? %>
+      <% @tasks_not_completed.each do |task1| %>
+      <dl class="row">
+        <dt class="col-sm-7 mb-2 mt-1">
+          <h4 >
+            <input class =" mr-2" type="checkbox"  name="collection_ids[]" value="<%= task1.id %>"/>
+          <%= link_to task1.title, task_path(task1),:class => 'text-dark hover mr-3',id: task1.id.to_s%>
+            <%=link_to "Edit task", edit_task_path(task1),:class => 'btn btn-warning mr-3  d-none',id: "task_"+task1.id.to_s%>
+            <%= link_to "Delete task", task_path(task1),method: :delete,remote: true,:class => 'btn btn-danger delete d-none',id: "task_"+task1.id.to_s%> </h4></dt>
+        <dd class="col-sm-3 mb-2 mt-1"><%= link_to "Complete task", complete_task_path(task1),:class => 'complete btn btn-warning mb-4' %></dd>
+      </dl>
+      <% end %>
+  <% end %>
+  </div>
+  <h3 class="mt-2"><%= link_to "All completed tasks:" ,tasks_path(:completed_sorted=>true), :class=>"text-dark" %></h3>
+  <p class="font-weight-light s">press to sort tasks</p>
+  <div class="completed_tasks">
+  <%if not @tasks_not_completed.nil? %>
+    <% @tasks_completed.each do |task2| %>
+      <dl class="row">
+        <dt class="col-sm-7 mb-2 mt-1">
+          <h4 >
+            <input class =" mr-2" type="checkbox"  name="collection_ids[]" value="<%= task2.id %>"/>
+            <%= link_to task2.title, task_path(task2),:class => 'text-dark hover mr-3',id: task2.id.to_s%>
+            <%=link_to "Edit task", edit_task_path(task2),:class => 'btn btn-warning mr-3 d-none',id: "task_"+task2.id.to_s%>
+            <%= link_to "Delete task", task_path(task2),method: :delete,remote: true,:class => 'btn btn-danger d-none delete',id: "task_"+task2.id.to_s%>
+          </h4>
+        </dt>
+        <dd class="col-sm-3  mb-2 mt-1"><%= link_to "Make active", uncomplete_task_path(task2),:class => 'uncomplete btn btn-warning mb-4' %></dd>
+      </dl>
+    <% end %>
+    <br>
+  <% end %>
+  </div>
+  <%= link_to "Add task", new_task_path(),:class => 'btn btn-info mt-2 w-25' %>
+  <%= f.submit("Batch delete", :class => 'btn btn-danger mt-2 w-25')%>
+<%end %>
+<button class="btn btn-success w-25 mt-3" id="check_all">Check all</button>
+<button class="btn btn-success w-25 mt-3" id="uncheck_all">Uncheck all</button>

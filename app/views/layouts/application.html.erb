@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TaskManager</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header class="d-flex flex-column p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand">Task Manager</a>
+        <span class="navbar-text ">
+          <span class="mr-2">
+            <%= link_to "Main page", tasks_path %>
+          </span>
+            <span class="mr-2">
+          <%if signed_in? %>
+            <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+            <%else %>
+            <%= link_to "Login", new_user_session_path %>
+          <%end %>
+          </span>
+          <%= link_to "Sing up", new_user_registration_path %>
+        </span>
+
+
+      </nav>
+    </header>
+    <p class="notice text-warning font-weight-bold"><%= notice %></p>
+    <p class="alert text-danger font-weight-bold"><%= alert  %></p>
+    <div class="container">
+
+    <%= yield %>
+    </div>
+  </body>
+</html>

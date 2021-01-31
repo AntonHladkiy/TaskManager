@@ -1,0 +1,17 @@
+<h3>Create new task</h3>
+<%= form_for :task, url: tasks_path do |f| %>
+  <% if @task.errors.any? %>
+    <% @task.errors.full_messages.each do |msg| %>
+      <div class="alert alert-danger"><%= msg %></div>
+    <%end %>
+  <% end %>
+  <%= f.label :Title ,:class => 'form-check-label'%><br />
+  <%= f.text_field(:title, :class => 'form-control w-50') %>
+  <%= f.label :Description ,:class => 'form-check-label'%><br />
+  <%= f.text_area(:description, :class => 'form-control w-50') %>
+  <%= f.label :Priority ,:class => 'form-check-label'%><br />
+  <%= f.number_field(:priority, :class => 'form-control w-50') %>
+  <%= f.label :Due_Date ,:class => 'form-check-label '%><br />
+  <%= f.date_field(:dueDate, :class => 'form-control w-50') %>
+  <%= f.submit("Create", :class => 'btn btn-warning mt-2') %>
+<% end %>
