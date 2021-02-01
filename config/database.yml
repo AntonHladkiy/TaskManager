@@ -28,7 +28,7 @@ default: &default
   pool: 5
   host: localhost
   username: postgres
-  password: <%= ENV['passwordDB'] %>
+  password: <%= ENV['PASSWORDDB'] %>
   timeout: 5000
 development:
   <<: *default
